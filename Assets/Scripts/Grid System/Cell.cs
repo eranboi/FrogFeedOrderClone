@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Entities;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -10,8 +11,16 @@ namespace Grid_System
         public List<CellObject> objectStackList = new();
 
         [SerializeField] private List<GrapeCellObject> allGrapes;
-        
 
+
+        [Button]
+        public void FixHierarchy()
+        {
+            foreach (var cellObject in objectStackList)
+            {
+                cellObject.transform.SetParent(transform);
+            }
+        }
         private void Start()
         {
             GenerateContent();
