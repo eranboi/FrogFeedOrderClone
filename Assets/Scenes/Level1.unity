@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -263,10 +263,10 @@ RectTransform:
   - {fileID: 182262041}
   m_Father: {fileID: 1612678728}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 1440, y: 810}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &49810073
 MonoBehaviour:
@@ -861,7 +861,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 182262040}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -869,11 +869,11 @@ RectTransform:
   - {fileID: 2138335065}
   m_Father: {fileID: 49810072}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -523}
-  m_SizeDelta: {x: 519.2546, y: 175.8479}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 0, y: 274}
+  m_SizeDelta: {x: 438, y: 148}
+  m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &182262042
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1775,13 +1775,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 70
-  m_fontSizeBase: 70
+  m_fontSize: 50
+  m_fontSizeBase: 50
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -2768,10 +2768,10 @@ RectTransform:
   - {fileID: 1021050383}
   m_Father: {fileID: 1612678728}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 1440, y: 810}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &751908398
 MonoBehaviour:
@@ -3593,11 +3593,11 @@ RectTransform:
   - {fileID: 502498823}
   m_Father: {fileID: 751908397}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -523}
-  m_SizeDelta: {x: 519.2546, y: 175.8479}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 0, y: 274}
+  m_SizeDelta: {x: 438, y: 148}
+  m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1021050384
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4192,11 +4192,11 @@ RectTransform:
   - {fileID: 1932958727}
   m_Father: {fileID: 751908397}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 855, y: 367}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0, y: -405.59}
+  m_SizeDelta: {x: 855, y: 275.25}
+  m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1180335285
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4871,13 +4871,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 70
-  m_fontSizeBase: 70
+  m_fontSize: 50
+  m_fontSizeBase: 50
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -5383,6 +5383,506 @@ MonoBehaviour:
   - {fileID: 1580111293}
   - {fileID: 221715326}
   - {fileID: 564564451}
+  - {fileID: 2129518996}
+  - {fileID: 264675017}
+  - {fileID: 1134600029}
+  - {fileID: 820070207}
+  - {fileID: 540687377}
+  - {fileID: 1232124739}
+  - {fileID: 1624402946}
+  - {fileID: 1319885853}
+  - {fileID: 861649}
+  - {fileID: 1909131275}
+  - {fileID: 941809332}
+  - {fileID: 1575121244}
+  - {fileID: 1356082295}
+  - {fileID: 413806938}
+  - {fileID: 477051205}
+  - {fileID: 1167660109}
+  - {fileID: 2046179328}
+  - {fileID: 941066968}
+  - {fileID: 163189409}
+  - {fileID: 596899859}
+  - {fileID: 374009167}
+  - {fileID: 58088779}
+  - {fileID: 1580111293}
+  - {fileID: 221715326}
+  - {fileID: 564564451}
+  - {fileID: 2129518996}
+  - {fileID: 264675017}
+  - {fileID: 1134600029}
+  - {fileID: 820070207}
+  - {fileID: 540687377}
+  - {fileID: 1232124739}
+  - {fileID: 1624402946}
+  - {fileID: 1319885853}
+  - {fileID: 861649}
+  - {fileID: 1909131275}
+  - {fileID: 941809332}
+  - {fileID: 1575121244}
+  - {fileID: 1356082295}
+  - {fileID: 413806938}
+  - {fileID: 477051205}
+  - {fileID: 1167660109}
+  - {fileID: 2046179328}
+  - {fileID: 941066968}
+  - {fileID: 163189409}
+  - {fileID: 596899859}
+  - {fileID: 374009167}
+  - {fileID: 58088779}
+  - {fileID: 1580111293}
+  - {fileID: 221715326}
+  - {fileID: 564564451}
+  - {fileID: 2129518996}
+  - {fileID: 264675017}
+  - {fileID: 1134600029}
+  - {fileID: 820070207}
+  - {fileID: 540687377}
+  - {fileID: 1232124739}
+  - {fileID: 1624402946}
+  - {fileID: 1319885853}
+  - {fileID: 861649}
+  - {fileID: 1909131275}
+  - {fileID: 941809332}
+  - {fileID: 1575121244}
+  - {fileID: 1356082295}
+  - {fileID: 413806938}
+  - {fileID: 477051205}
+  - {fileID: 1167660109}
+  - {fileID: 2046179328}
+  - {fileID: 941066968}
+  - {fileID: 163189409}
+  - {fileID: 596899859}
+  - {fileID: 374009167}
+  - {fileID: 58088779}
+  - {fileID: 1580111293}
+  - {fileID: 221715326}
+  - {fileID: 564564451}
+  - {fileID: 2129518996}
+  - {fileID: 264675017}
+  - {fileID: 1134600029}
+  - {fileID: 820070207}
+  - {fileID: 540687377}
+  - {fileID: 1232124739}
+  - {fileID: 1624402946}
+  - {fileID: 1319885853}
+  - {fileID: 861649}
+  - {fileID: 1909131275}
+  - {fileID: 941809332}
+  - {fileID: 1575121244}
+  - {fileID: 1356082295}
+  - {fileID: 413806938}
+  - {fileID: 477051205}
+  - {fileID: 1167660109}
+  - {fileID: 2046179328}
+  - {fileID: 941066968}
+  - {fileID: 163189409}
+  - {fileID: 596899859}
+  - {fileID: 374009167}
+  - {fileID: 58088779}
+  - {fileID: 1580111293}
+  - {fileID: 221715326}
+  - {fileID: 564564451}
+  - {fileID: 2129518996}
+  - {fileID: 264675017}
+  - {fileID: 1134600029}
+  - {fileID: 820070207}
+  - {fileID: 540687377}
+  - {fileID: 1232124739}
+  - {fileID: 1624402946}
+  - {fileID: 1319885853}
+  - {fileID: 861649}
+  - {fileID: 1909131275}
+  - {fileID: 941809332}
+  - {fileID: 1575121244}
+  - {fileID: 1356082295}
+  - {fileID: 413806938}
+  - {fileID: 477051205}
+  - {fileID: 1167660109}
+  - {fileID: 2046179328}
+  - {fileID: 941066968}
+  - {fileID: 163189409}
+  - {fileID: 596899859}
+  - {fileID: 374009167}
+  - {fileID: 58088779}
+  - {fileID: 1580111293}
+  - {fileID: 221715326}
+  - {fileID: 564564451}
+  - {fileID: 2129518996}
+  - {fileID: 264675017}
+  - {fileID: 1134600029}
+  - {fileID: 820070207}
+  - {fileID: 540687377}
+  - {fileID: 1232124739}
+  - {fileID: 1624402946}
+  - {fileID: 1319885853}
+  - {fileID: 861649}
+  - {fileID: 1909131275}
+  - {fileID: 941809332}
+  - {fileID: 1575121244}
+  - {fileID: 1356082295}
+  - {fileID: 413806938}
+  - {fileID: 477051205}
+  - {fileID: 1167660109}
+  - {fileID: 2046179328}
+  - {fileID: 941066968}
+  - {fileID: 163189409}
+  - {fileID: 596899859}
+  - {fileID: 374009167}
+  - {fileID: 58088779}
+  - {fileID: 1580111293}
+  - {fileID: 221715326}
+  - {fileID: 564564451}
+  - {fileID: 2129518996}
+  - {fileID: 264675017}
+  - {fileID: 1134600029}
+  - {fileID: 820070207}
+  - {fileID: 540687377}
+  - {fileID: 1232124739}
+  - {fileID: 1624402946}
+  - {fileID: 1319885853}
+  - {fileID: 861649}
+  - {fileID: 1909131275}
+  - {fileID: 941809332}
+  - {fileID: 1575121244}
+  - {fileID: 1356082295}
+  - {fileID: 413806938}
+  - {fileID: 477051205}
+  - {fileID: 1167660109}
+  - {fileID: 2046179328}
+  - {fileID: 941066968}
+  - {fileID: 163189409}
+  - {fileID: 596899859}
+  - {fileID: 374009167}
+  - {fileID: 58088779}
+  - {fileID: 1580111293}
+  - {fileID: 221715326}
+  - {fileID: 564564451}
+  - {fileID: 2129518996}
+  - {fileID: 264675017}
+  - {fileID: 1134600029}
+  - {fileID: 820070207}
+  - {fileID: 540687377}
+  - {fileID: 1232124739}
+  - {fileID: 1624402946}
+  - {fileID: 1319885853}
+  - {fileID: 861649}
+  - {fileID: 1909131275}
+  - {fileID: 941809332}
+  - {fileID: 1575121244}
+  - {fileID: 1356082295}
+  - {fileID: 413806938}
+  - {fileID: 477051205}
+  - {fileID: 1167660109}
+  - {fileID: 2046179328}
+  - {fileID: 941066968}
+  - {fileID: 163189409}
+  - {fileID: 596899859}
+  - {fileID: 374009167}
+  - {fileID: 58088779}
+  - {fileID: 1580111293}
+  - {fileID: 221715326}
+  - {fileID: 564564451}
+  - {fileID: 2129518996}
+  - {fileID: 264675017}
+  - {fileID: 1134600029}
+  - {fileID: 820070207}
+  - {fileID: 540687377}
+  - {fileID: 1232124739}
+  - {fileID: 1624402946}
+  - {fileID: 1319885853}
+  - {fileID: 861649}
+  - {fileID: 1909131275}
+  - {fileID: 941809332}
+  - {fileID: 1575121244}
+  - {fileID: 1356082295}
+  - {fileID: 413806938}
+  - {fileID: 477051205}
+  - {fileID: 1167660109}
+  - {fileID: 2046179328}
+  - {fileID: 941066968}
+  - {fileID: 163189409}
+  - {fileID: 596899859}
+  - {fileID: 374009167}
+  - {fileID: 58088779}
+  - {fileID: 1580111293}
+  - {fileID: 221715326}
+  - {fileID: 564564451}
+  - {fileID: 2129518996}
+  - {fileID: 264675017}
+  - {fileID: 1134600029}
+  - {fileID: 820070207}
+  - {fileID: 540687377}
+  - {fileID: 1232124739}
+  - {fileID: 1624402946}
+  - {fileID: 1319885853}
+  - {fileID: 861649}
+  - {fileID: 1909131275}
+  - {fileID: 941809332}
+  - {fileID: 1575121244}
+  - {fileID: 1356082295}
+  - {fileID: 413806938}
+  - {fileID: 477051205}
+  - {fileID: 1167660109}
+  - {fileID: 2046179328}
+  - {fileID: 941066968}
+  - {fileID: 163189409}
+  - {fileID: 596899859}
+  - {fileID: 374009167}
+  - {fileID: 58088779}
+  - {fileID: 1580111293}
+  - {fileID: 221715326}
+  - {fileID: 564564451}
+  - {fileID: 2129518996}
+  - {fileID: 264675017}
+  - {fileID: 1134600029}
+  - {fileID: 820070207}
+  - {fileID: 540687377}
+  - {fileID: 1232124739}
+  - {fileID: 1624402946}
+  - {fileID: 1319885853}
+  - {fileID: 861649}
+  - {fileID: 1909131275}
+  - {fileID: 941809332}
+  - {fileID: 1575121244}
+  - {fileID: 1356082295}
+  - {fileID: 413806938}
+  - {fileID: 477051205}
+  - {fileID: 1167660109}
+  - {fileID: 2046179328}
+  - {fileID: 941066968}
+  - {fileID: 163189409}
+  - {fileID: 596899859}
+  - {fileID: 374009167}
+  - {fileID: 58088779}
+  - {fileID: 1580111293}
+  - {fileID: 221715326}
+  - {fileID: 564564451}
+  - {fileID: 2129518996}
+  - {fileID: 264675017}
+  - {fileID: 1134600029}
+  - {fileID: 820070207}
+  - {fileID: 540687377}
+  - {fileID: 1232124739}
+  - {fileID: 1624402946}
+  - {fileID: 1319885853}
+  - {fileID: 861649}
+  - {fileID: 1909131275}
+  - {fileID: 941809332}
+  - {fileID: 1575121244}
+  - {fileID: 1356082295}
+  - {fileID: 413806938}
+  - {fileID: 477051205}
+  - {fileID: 1167660109}
+  - {fileID: 2046179328}
+  - {fileID: 941066968}
+  - {fileID: 163189409}
+  - {fileID: 596899859}
+  - {fileID: 374009167}
+  - {fileID: 58088779}
+  - {fileID: 1580111293}
+  - {fileID: 221715326}
+  - {fileID: 564564451}
+  - {fileID: 2129518996}
+  - {fileID: 264675017}
+  - {fileID: 1134600029}
+  - {fileID: 820070207}
+  - {fileID: 540687377}
+  - {fileID: 1232124739}
+  - {fileID: 1624402946}
+  - {fileID: 1319885853}
+  - {fileID: 861649}
+  - {fileID: 1909131275}
+  - {fileID: 941809332}
+  - {fileID: 1575121244}
+  - {fileID: 1356082295}
+  - {fileID: 413806938}
+  - {fileID: 477051205}
+  - {fileID: 1167660109}
+  - {fileID: 2046179328}
+  - {fileID: 941066968}
+  - {fileID: 163189409}
+  - {fileID: 596899859}
+  - {fileID: 374009167}
+  - {fileID: 58088779}
+  - {fileID: 1580111293}
+  - {fileID: 221715326}
+  - {fileID: 564564451}
+  - {fileID: 2129518996}
+  - {fileID: 264675017}
+  - {fileID: 1134600029}
+  - {fileID: 820070207}
+  - {fileID: 540687377}
+  - {fileID: 1232124739}
+  - {fileID: 1624402946}
+  - {fileID: 1319885853}
+  - {fileID: 861649}
+  - {fileID: 1909131275}
+  - {fileID: 941809332}
+  - {fileID: 1575121244}
+  - {fileID: 1356082295}
+  - {fileID: 413806938}
+  - {fileID: 477051205}
+  - {fileID: 1167660109}
+  - {fileID: 2046179328}
+  - {fileID: 941066968}
+  - {fileID: 163189409}
+  - {fileID: 596899859}
+  - {fileID: 374009167}
+  - {fileID: 58088779}
+  - {fileID: 1580111293}
+  - {fileID: 221715326}
+  - {fileID: 564564451}
+  - {fileID: 2129518996}
+  - {fileID: 264675017}
+  - {fileID: 1134600029}
+  - {fileID: 820070207}
+  - {fileID: 540687377}
+  - {fileID: 1232124739}
+  - {fileID: 1624402946}
+  - {fileID: 1319885853}
+  - {fileID: 861649}
+  - {fileID: 1909131275}
+  - {fileID: 941809332}
+  - {fileID: 1575121244}
+  - {fileID: 1356082295}
+  - {fileID: 413806938}
+  - {fileID: 477051205}
+  - {fileID: 1167660109}
+  - {fileID: 2046179328}
+  - {fileID: 941066968}
+  - {fileID: 163189409}
+  - {fileID: 596899859}
+  - {fileID: 374009167}
+  - {fileID: 58088779}
+  - {fileID: 1580111293}
+  - {fileID: 221715326}
+  - {fileID: 564564451}
+  - {fileID: 2129518996}
+  - {fileID: 264675017}
+  - {fileID: 1134600029}
+  - {fileID: 820070207}
+  - {fileID: 540687377}
+  - {fileID: 1232124739}
+  - {fileID: 1624402946}
+  - {fileID: 1319885853}
+  - {fileID: 861649}
+  - {fileID: 1909131275}
+  - {fileID: 941809332}
+  - {fileID: 1575121244}
+  - {fileID: 1356082295}
+  - {fileID: 413806938}
+  - {fileID: 477051205}
+  - {fileID: 1167660109}
+  - {fileID: 2046179328}
+  - {fileID: 941066968}
+  - {fileID: 163189409}
+  - {fileID: 596899859}
+  - {fileID: 374009167}
+  - {fileID: 58088779}
+  - {fileID: 1580111293}
+  - {fileID: 221715326}
+  - {fileID: 564564451}
+  - {fileID: 2129518996}
+  - {fileID: 264675017}
+  - {fileID: 1134600029}
+  - {fileID: 820070207}
+  - {fileID: 540687377}
+  - {fileID: 1232124739}
+  - {fileID: 1624402946}
+  - {fileID: 1319885853}
+  - {fileID: 861649}
+  - {fileID: 1909131275}
+  - {fileID: 941809332}
+  - {fileID: 1575121244}
+  - {fileID: 1356082295}
+  - {fileID: 413806938}
+  - {fileID: 477051205}
+  - {fileID: 1167660109}
+  - {fileID: 2046179328}
+  - {fileID: 941066968}
+  - {fileID: 163189409}
+  - {fileID: 596899859}
+  - {fileID: 374009167}
+  - {fileID: 58088779}
+  - {fileID: 1580111293}
+  - {fileID: 221715326}
+  - {fileID: 564564451}
+  - {fileID: 2129518996}
+  - {fileID: 264675017}
+  - {fileID: 1134600029}
+  - {fileID: 820070207}
+  - {fileID: 540687377}
+  - {fileID: 1232124739}
+  - {fileID: 1624402946}
+  - {fileID: 1319885853}
+  - {fileID: 861649}
+  - {fileID: 1909131275}
+  - {fileID: 941809332}
+  - {fileID: 1575121244}
+  - {fileID: 1356082295}
+  - {fileID: 413806938}
+  - {fileID: 477051205}
+  - {fileID: 1167660109}
+  - {fileID: 2046179328}
+  - {fileID: 941066968}
+  - {fileID: 163189409}
+  - {fileID: 596899859}
+  - {fileID: 374009167}
+  - {fileID: 58088779}
+  - {fileID: 1580111293}
+  - {fileID: 221715326}
+  - {fileID: 564564451}
+  - {fileID: 2129518996}
+  - {fileID: 264675017}
+  - {fileID: 1134600029}
+  - {fileID: 820070207}
+  - {fileID: 540687377}
+  - {fileID: 1232124739}
+  - {fileID: 1624402946}
+  - {fileID: 1319885853}
+  - {fileID: 861649}
+  - {fileID: 1909131275}
+  - {fileID: 941809332}
+  - {fileID: 1575121244}
+  - {fileID: 1356082295}
+  - {fileID: 413806938}
+  - {fileID: 477051205}
+  - {fileID: 1167660109}
+  - {fileID: 2046179328}
+  - {fileID: 941066968}
+  - {fileID: 163189409}
+  - {fileID: 596899859}
+  - {fileID: 374009167}
+  - {fileID: 58088779}
+  - {fileID: 1580111293}
+  - {fileID: 221715326}
+  - {fileID: 564564451}
+  - {fileID: 2129518996}
+  - {fileID: 264675017}
+  - {fileID: 1134600029}
+  - {fileID: 820070207}
+  - {fileID: 540687377}
+  - {fileID: 1232124739}
+  - {fileID: 1624402946}
+  - {fileID: 1319885853}
+  - {fileID: 861649}
+  - {fileID: 1909131275}
+  - {fileID: 941809332}
+  - {fileID: 1575121244}
+  - {fileID: 1356082295}
+  - {fileID: 413806938}
+  - {fileID: 477051205}
+  - {fileID: 1167660109}
+  - {fileID: 2046179328}
+  - {fileID: 941066968}
+  - {fileID: 163189409}
+  - {fileID: 596899859}
+  - {fileID: 374009167}
+  - {fileID: 58088779}
+  - {fileID: 1580111293}
+  - {fileID: 221715326}
+  - {fileID: 564564451}
   cellParent: {fileID: 600812192}
 --- !u!4 &1477257685
 Transform:
@@ -5781,11 +6281,11 @@ RectTransform:
   - {fileID: 1340748041}
   m_Father: {fileID: 49810072}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 855, y: 367}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0, y: -405.59}
+  m_SizeDelta: {x: 855, y: 275.25}
+  m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1592453303
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5895,10 +6395,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -6463,7 +6963,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 10.87}
+  m_AnchoredPosition: {x: 0, y: 11}
   m_SizeDelta: {x: 0, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1932958728
@@ -6513,13 +7013,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 70
-  m_fontSizeBase: 70
+  m_fontSize: 50
+  m_fontSizeBase: 50
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -7060,13 +7560,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 70
-  m_fontSizeBase: 70
+  m_fontSize: 50
+  m_fontSizeBase: 50
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
