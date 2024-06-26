@@ -7,10 +7,13 @@ namespace Entities
     public class FrogCellObject : CellObject
     {
         private TongueController _tongue;
-
+        private bool _isClickable;
+        public bool isDone = false;
+        
         private void Awake()
         {
             _tongue = GetComponentInChildren<TongueController>();
+            _isClickable = true;
         }
 
         private void Update()
@@ -26,6 +29,7 @@ namespace Entities
             Ray ray = Camera.main.ScreenPointToRay(mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hit) && hit.transform == transform)
             {
+                if (!_isClickable) return;
                 OnMouseClick();
             }
         }
@@ -34,6 +38,16 @@ namespace Entities
         {
             GameManager.OnFrogClick?.Invoke();
             _tongue.StartCollecting();
+            _tongue.TongueIsIdle += ResetIsClickable;
+            _isClickable = false;
+        }
+
+        private void ResetIsClickable()
+        {
+            _tongue.TongueIsIdle -= ResetIsClickable;
+            if (isDone) return;
+            _isClickable = true;
+
         }
     }
 }

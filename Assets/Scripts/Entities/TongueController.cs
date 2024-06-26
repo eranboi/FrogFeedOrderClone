@@ -116,7 +116,6 @@ namespace Entities
             tongueStatus = TongueStatus.Idle;
             _lineRenderer.SetPosition(_lineRenderer.positionCount - 1, transform.position);
             TongueIsIdle?.Invoke();
-            GameManager.OnClickProcessed?.Invoke();
             _collectedGrapes.Clear();
             path.Clear();
 
@@ -169,15 +168,23 @@ namespace Entities
         {
             StartCoroutine(ProcessCellsCoroutine());
         }
+        
         private IEnumerator ProcessCellsCoroutine()
         {
-            if (_processedCells.Count == 0) yield break;
+            if (_processedCells.Count == 0)
+            {
+                GameManager.OnClickProcessed?.Invoke();
+                yield break;
+            }
 
             var (selfX, selfY) = _grid.GetGridIndex(transform.parent.position);
             var selfCell = _grid.GetCell(selfX, selfY);
-            if (selfCell == null) yield break;
-
-
+            if (selfCell == null)
+            {
+                GameManager.OnClickProcessed?.Invoke();
+                yield break;
+            }
+            GetComponentInParent<FrogCellObject>().isDone = true;
             yield return null;
             yield return null;
             

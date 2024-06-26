@@ -53,16 +53,18 @@ namespace Managers
         }
         private void ClickProcessed()
         {
+            Debug.Log("Click Processed.");
             if (GridController.Instance.CheckIsClear())
             {
                 UIController.Instance.OpenWinPanel();
                 print("win");
                 return;
             }
-            else if (_clickCount == 0)
+            
+            if (_clickCount == 0 && !GridController.Instance.CheckIsClear())
             {
-                print("lose");
                 UIController.Instance.OpenFailPanel();                
+                print("lose");
             }
         }
 
