@@ -8,6 +8,7 @@ namespace Entities
     {
         public void FlashRed()
         {
+            if (isPickedUp) return;
             var material = GetComponent<MeshRenderer>().material;
             material.DOColor(Color.red, .15f).OnComplete(() =>
             {

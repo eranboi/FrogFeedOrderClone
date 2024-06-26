@@ -59,7 +59,7 @@ namespace Managers
                 print("win");
                 return;
             }
-            if (_clickCount == 0)
+            else if (_clickCount == 0)
             {
                 print("lose");
                 UIController.Instance.OpenFailPanel();                

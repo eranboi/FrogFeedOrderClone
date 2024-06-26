@@ -11,100 +11,116 @@ namespace Entities
 {
     public class TongueController : MonoBehaviour
     {
-        [SerializeField] private float tongueSpeed = .25f;
+        [SerializeField] private float tongueSpeed = 4f;
         [SerializeField] public TongueStatus tongueStatus;
 
-        private CellObjectColor frogColor;
-        private LineRenderer lineRenderer;
+        private CellObjectColor _frogColor;
+        private LineRenderer _lineRenderer;
         [SerializeField] private Vector3 direction;
-        private Vector3 currentTonguePosition;
+        private Vector3 _currentTonguePosition;
 
-        private List<Transform> collectedGrapes = new();
-        private List<Cell> processedCells = new();
+        [SerializeField] private List<Transform> _collectedGrapes = new();
+        [SerializeField] private List<Cell> _processedCells = new();
 
         public List<Vector3> path;
         
         public Action TongueIsIdle;
 
-        private GridController gridController;
-        private Grid grid;
+        private GridController _gridController;
+        private Grid _grid;
+        
+        private int _grapesInMotionCount = 0;
+
 
         private void Awake()
         {
-            lineRenderer = GetComponent<LineRenderer>();
+            _lineRenderer = GetComponent<LineRenderer>();
         }
 
         private void Start()
         {
-            frogColor = transform.parent.GetComponent<CellObject>().cellObjectColor;
+            _frogColor = transform.parent.GetComponent<CellObject>().cellObjectColor;
             transform.position = transform.parent.position;
-            lineRenderer.SetPosition(0, transform.parent.position);
-            lineRenderer.SetPosition(1, transform.parent.position);
+            _lineRenderer.SetPosition(0, transform.parent.position);
+            _lineRenderer.SetPosition(1, transform.parent.position);
 
-            gridController = GridController.Instance;
-            grid = gridController.grid;
+            _gridController = GridController.Instance;
+            _grid = _gridController.Grid;
         }
 
         private void Update()
         {
             if (tongueStatus == TongueStatus.Idle) return;
 
-            currentTonguePosition = lineRenderer.GetPosition(lineRenderer.positionCount - 1);
+            _currentTonguePosition = _lineRenderer.GetPosition(_lineRenderer.positionCount - 1);
             switch (tongueStatus)
             {
                 case TongueStatus.GoingOut:
-                    MoveTongue(tongueSpeed);
-                    break;
                 case TongueStatus.GoingIn:
                     MoveTongue(tongueSpeed);
-                    GrapeMovement();
-                    CheckTongueIdle();
+                    if (tongueStatus == TongueStatus.GoingIn)
+                    {
+                        if(_collectedGrapes.Count > 0)
+                            GrapeMovement();
+                        if(_grapesInMotionCount == 0)
+                            CheckTongueIdle();
+                    }
                     break;
             }
         }
 
         private void MoveTongue(float speed)
         {
-            var newX = currentTonguePosition.x + speed * direction.x * Time.deltaTime;
-            var newZ = currentTonguePosition.z + speed * direction.z * Time.deltaTime;
-            lineRenderer.SetPosition(lineRenderer.positionCount - 1, new Vector3(newX, currentTonguePosition.y, newZ));
+            var newX = _currentTonguePosition.x + speed * direction.x * Time.deltaTime;
+            var newZ = _currentTonguePosition.z + speed * direction.z * Time.deltaTime;
+            _lineRenderer.SetPosition(_lineRenderer.positionCount - 1, new Vector3(newX, _currentTonguePosition.y, newZ));
         }
 
         private void GrapeMovement()
         {
-            for (var i = 0; i < collectedGrapes.Count; i++)
+            for (var i = 0; i < _collectedGrapes.Count; i++)
             {
-                var grape = collectedGrapes[i];
+                var grape = _collectedGrapes[i];
                 if (grape == null)
                 {
-                    collectedGrapes.RemoveAt(i);
+                    _collectedGrapes.RemoveAt(i);
                     continue;
                 }
-                else
+                
+                var index = path.FindIndex(pos => Math.Abs(pos.x - grape.position.x) < .2f && Math.Abs(pos.z - grape.position.z) < .2f);
+                List<Vector3> newPath = new();
+                for (var j = index; j > 0; j--)
                 {
-                    var index = path.FindIndex(pos => Math.Abs(pos.x - grape.position.x) < .2f&& Math.Abs(pos.z - grape.position.z) < .2f);
-                    List<Vector3> newPath = new ();
-                    for (var j = index; j > 0; j--)
-                    {
-                        newPath.Add(path[j]);
-                    }
-                    newPath.Add(transform.position);
-                    grape.DOPath(newPath.ToArray(), newPath.Count * .2f).SetEase(Ease.Linear).OnComplete(()=> Destroy(grape.gameObject));
-                    
-                    collectedGrapes.RemoveAt(i);
+                    newPath.Add(path[j]);
                 }
+                newPath.Add(transform.position -transform.forward * .45f);
+                
+                grape.DOPath(newPath.ToArray(), newPath.Count * 1/ (tongueSpeed)).SetEase(Ease.Linear).OnComplete(() =>
+                {
+                    Destroy(grape.gameObject);
+                    _grapesInMotionCount--;
+                    if (_grapesInMotionCount <= 0)
+                    {
+                        CheckTongueIdle();
+                    }
+                });
+
+                _collectedGrapes.RemoveAt(i);
+                _grapesInMotionCount++;
             }
         }
 
         private void CheckTongueIdle()
         {
-            if (Vector3.Distance(currentTonguePosition, transform.position) < .2f)
-            {
-                tongueStatus = TongueStatus.Idle;
-                TongueIsIdle?.Invoke();
-                GameManager.OnClickProcessed?.Invoke();
-                collectedGrapes.Clear();
-            }
+            if (Vector3.Distance(_currentTonguePosition, transform.position) > .5f) return;
+            tongueStatus = TongueStatus.Idle;
+            _lineRenderer.SetPosition(_lineRenderer.positionCount - 1, transform.position);
+            TongueIsIdle?.Invoke();
+            GameManager.OnClickProcessed?.Invoke();
+            _collectedGrapes.Clear();
+            path.Clear();
+
+            TongueLogger("Tongue Idle");
         }
 
         public void SetTongueDirection(Vector3 newDirection, TongueStatus newTongueStatus)
@@ -115,56 +131,63 @@ namespace Entities
 
         public void AddGrape(Transform grapeTransform)
         {
-            if (grapeTransform != null && !collectedGrapes.Contains(grapeTransform))
+            if (grapeTransform != null && !_collectedGrapes.Contains(grapeTransform))
             {
-                collectedGrapes.Add(grapeTransform);
+                _collectedGrapes.Add(grapeTransform);
+                grapeTransform.GetComponent<CellObject>().isPickedUp = true;
             }
         }
 
         public void DropGrapes()
         {
-            collectedGrapes.Clear();
-            processedCells.Clear();
+            foreach (var grapeTransform in _collectedGrapes)
+            {
+                grapeTransform.GetComponent<CellObject>().isPickedUp = false;
+            }
+            
+            _collectedGrapes.Clear();
+            _processedCells.Clear();
         }
 
         public void ChangeDirection(Vector3 newDirection)
         {
+            var positionCount = _lineRenderer.positionCount;
             if (tongueStatus == TongueStatus.GoingOut)
             {
-                var positionCount = lineRenderer.positionCount;
-                positionCount += 1;
-                lineRenderer.positionCount = positionCount;
-                lineRenderer.SetPosition(positionCount - 1, lineRenderer.GetPosition(positionCount - 2));
+                _lineRenderer.positionCount = ++positionCount;
+                _lineRenderer.SetPosition(positionCount - 1, _lineRenderer.GetPosition(positionCount - 2));
             }
             else
             {
-                var positionCount = lineRenderer.positionCount;
-                positionCount -= 1;
-                lineRenderer.positionCount = positionCount;
+                _lineRenderer.positionCount = --positionCount;
             }
             direction = newDirection;
             direction.y = 0;
         }
 
-        public void ProcessCells()
+        private void ProcessCells()
         {
             StartCoroutine(ProcessCellsCoroutine());
         }
-
         private IEnumerator ProcessCellsCoroutine()
         {
-            if (processedCells.Count == 0) yield break;
+            if (_processedCells.Count == 0) yield break;
 
-            var (selfX, selfY) = grid.GetGridIndex(transform.parent.position);
-            var selfCell = grid.GetCell(selfX, selfY);
+            var (selfX, selfY) = _grid.GetGridIndex(transform.parent.position);
+            var selfCell = _grid.GetCell(selfX, selfY);
             if (selfCell == null) yield break;
 
-            processedCells.Insert(0, selfCell);
+
+            yield return null;
+            yield return null;
+            
+            //Add the tile cell that the frog stands on.
+            _processedCells.Insert(0, selfCell);
 
             var thisFrog = transform.parent.GetComponent<CellObject>();
-            for (var i = processedCells.Count - 1; i >= 0; i--)
+            for (var i = _processedCells.Count - 1; i >= 0; i--)
             {
-                var cell = processedCells[i];
+                var cell = _processedCells[i];
                 cell.ClearEmptyItems();
 
                 var cellObject = cell.objectStackList.Count > 0 ? cell.objectStackList[^1] : null;
@@ -186,155 +209,172 @@ namespace Entities
                     cell.objectStackList.Remove(cellObject);
                     cell.ClearEmptyItems();
                     cell.GenerateContent();
+                    TongueLogger("Generate content.");
                     selfCell.objectStackList.Remove(thisFrog);
                 }
             }
             thisFrog.ShrinkAndDestroy();
             GameManager.OnClickProcessed?.Invoke();
-            
-            
 
-            processedCells.Clear();
-            TongueIsIdle?.Invoke();
+            _processedCells.Clear();
+            // TongueIsIdle?.Invoke();
         }
 
         public void AddProcessedCell(Cell cell)
         {
-            if (!processedCells.Contains(cell))
+            if (!_processedCells.Contains(cell))
             {
-                processedCells.Add(cell);
+                _processedCells.Add(cell);
             }
         }
 
         public void StartCollecting()
         {
+            if(tongueStatus != TongueStatus.Idle) return;
             StartCoroutine(CollectRoutine());
         }
 
         private IEnumerator CollectRoutine()
         {
-            grid = gridController.grid;
-            var (x, y) = grid.GetGridIndex(lineRenderer.GetPosition(lineRenderer.positionCount - 1));
+            _grid = _gridController.Grid;
+            var (x, y) = _grid.GetGridIndex(_lineRenderer.GetPosition(_lineRenderer.positionCount - 1));
             direction = -transform.parent.forward;
             x += (int)direction.x;
             y += (int)direction.z;
 
-            var (selfX, selfY) = grid.GetGridIndex(transform.position);
+            var (selfX, selfY) = _grid.GetGridIndex(transform.position);
 
             SetTongueDirection(direction, TongueStatus.GoingOut);
             TongueIsIdle += ProcessCells;
 
-            while (tongueStatus is not TongueStatus.Idle)
+            while (tongueStatus != TongueStatus.Idle)
             {
-                if (!grid.InsideBounds(x, y))
+                // If grid is not in bounds, we'll wait for half the normal time
+                // for visuals to be accurate
+                if (!_grid.InsideBounds(x, y))
                 {
+                    yield return new WaitForSeconds(1/ (tongueSpeed ));
+
+                    TongueLoggerErr("!_grid.InsideBounds(x, y)", gameObject);
                     SetTongueDirection(-direction, TongueStatus.GoingIn);
                     x += (int)direction.x;
                     y += (int)direction.z;
                     continue;
                 }
-
-                yield return new WaitForSeconds(.25f);
-
-                var currentCell = grid.GetCell(x, y);
                 
-                if (tongueStatus == TongueStatus.GoingOut)
+                yield return new WaitForSeconds(1/tongueSpeed);
+                
+                var currentCell = _grid.GetCell(x, y);
+
+                switch (tongueStatus)
                 {
-                    if (currentCell == null || currentCell.objectStackList.Count == 0)
-                    {
+                    case TongueStatus.GoingOut when (currentCell == null || currentCell.objectStackList.Count == 0):
+                        TongueLoggerErr($"currentCell == null : {currentCell == null}", gameObject);
+                        TongueLoggerErr($"currentCell.objectStackList.Count == 0 : {currentCell.objectStackList.Count == 0}", gameObject);
+                        DropGrapes();
                         SetTongueDirection(-direction, TongueStatus.GoingIn);
                         continue;
-                    }
-                
-                    if(currentCell.objectStackList.Count == 0)
-                    {
+                    case TongueStatus.GoingIn when (x == selfX && y == selfY || currentCell == null || currentCell.objectStackList.Count == 0):
                         continue;
-                    }
-                }
-                
-                if (tongueStatus == TongueStatus.GoingIn)
-                {
-                    if(x == selfX && y == selfY) continue;
-                    if(currentCell == null) continue;
-                    if(currentCell.objectStackList.Count == 0) continue;
                 }
 
                 if (tongueStatus == TongueStatus.Idle) break;
 
                 var topObject = currentCell.objectStackList[^1];
-                if (topObject == null)
+                if (topObject == null && tongueStatus == TongueStatus.GoingOut)
                 {
-                    if (tongueStatus == TongueStatus.GoingOut)
-                    {
-                        SetTongueDirection(-direction, TongueStatus.GoingIn);
-                        continue;
-                    }
+                    TongueLoggerErr("topObject is null", currentCell.gameObject);
+                    DropGrapes();
+                    SetTongueDirection(-direction, TongueStatus.GoingIn);
+                    continue;
                 }
 
                 switch (topObject)
                 {
-                    case GrapeCellObject grapeCellObject when grapeCellObject.cellObjectColor == frogColor:
-
+                    case GrapeCellObject grapeCellObject when grapeCellObject.cellObjectColor == _frogColor:
                         if (tongueStatus == TongueStatus.GoingOut)
                         {
+                            grapeCellObject.Pop();
                             AddGrape(grapeCellObject.transform);
                             AddProcessedCell(currentCell);
-                            grapeCellObject.Pop();
+                            TongueLoggerSucc("Added grape", grapeCellObject.gameObject);
                         }
                         break;
 
                     case GrapeCellObject grapeCellObject:
-
-                        DropGrapes();
-                        SetTongueDirection(-direction, TongueStatus.GoingIn);
-                        grapeCellObject.Pop();
-                        grapeCellObject.FlashRed();
-
-
+                        if (tongueStatus == TongueStatus.GoingOut)
+                        {
+                            TongueLoggerErr("Touched a different grape.", grapeCellObject.gameObject);
+                            DropGrapes();
+                            SetTongueDirection(-direction, TongueStatus.GoingIn);
+                            grapeCellObject.Pop();
+                            grapeCellObject.FlashRed();
+                        }
                         break;
 
                     case FrogCellObject frogCellObject:
-                        if (frogCellObject == transform.parent.GetComponent<CellObject>())
-                            break;
+                        if (frogCellObject != transform.parent.GetComponent<CellObject>() && tongueStatus == TongueStatus.GoingOut)
+                        {
+                            TongueLoggerErr("Touched a different frog.", frogCellObject.gameObject);
 
-
-                        DropGrapes();
-                        SetTongueDirection(-direction, TongueStatus.GoingIn);
-                        frogCellObject.Pop();
-
+                            DropGrapes();
+                            SetTongueDirection(-direction, TongueStatus.GoingIn);
+                            frogCellObject.Pop();
+                        }
                         break;
 
-                    case ArrowCellObject arrowCellObject:
-
-                        if (tongueStatus == TongueStatus.GoingOut)
+                    case ArrowCellObject arrowCellObject when arrowCellObject.cellObjectColor == _frogColor:
+                        switch (tongueStatus)
                         {
-                            var newDirection = arrowCellObject.transform.forward;
-                            arrowCellObject.tongueOriginalDirection = direction;
-                            ChangeDirection(newDirection);
-                            AddProcessedCell(currentCell);
+                            case TongueStatus.GoingOut:
+                            {
+                                TongueLogger($"Touched an arrow {tongueStatus}");
+                                var newDirection = arrowCellObject.transform.forward;
+                                arrowCellObject.tongueOriginalDirection = direction;
+                                ChangeDirection(newDirection);
+                                AddProcessedCell(currentCell);
+                                break;
+                            }
+                            case TongueStatus.GoingIn:
+                            {
+                                TongueLogger($"Touched an arrow {tongueStatus}");
+                                var newDirection = -arrowCellObject.tongueOriginalDirection;
+                                ChangeDirection(newDirection);
+                                break;
+                            }
                         }
-                        else if (tongueStatus == TongueStatus.GoingIn)
-                        {
-                            var newDirection = -arrowCellObject.tongueOriginalDirection;
-                            ChangeDirection(newDirection);
-                        }
-
-
                         break;
 
                     default:
-                        SetTongueDirection(direction, TongueStatus.GoingIn);
+                        TongueLoggerErr("Touched something and going in.");
+                        DropGrapes();
+                        SetTongueDirection(-direction, TongueStatus.GoingIn);
                         break;
                 }
 
-                if(tongueStatus == TongueStatus.GoingOut)
+                if (tongueStatus == TongueStatus.GoingOut)
+                {
                     path.Add(topObject.transform.position);
-                
+                }
+
                 x += (int)direction.x;
                 y += (int)direction.z;
-
             }
-            
+        }
+
+        private void TongueLogger(string msg, GameObject go = null)
+        {
+            Debug.Log($"<color=cyan>{msg}</color>", go);
+
+        }
+        private void TongueLoggerErr(string msg, GameObject go = null)
+        {
+            Debug.Log($"<color=red>{msg}</color>", go);
+        }
+        private void TongueLoggerSucc(string msg, GameObject go = null)
+        {
+            Debug.Log($"<color=green>{msg}</color>", go);
+
         }
     }
 

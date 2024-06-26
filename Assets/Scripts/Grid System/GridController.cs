@@ -5,6 +5,7 @@ using Sirenix.OdinInspector;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Grid_System
 {
@@ -23,10 +24,10 @@ namespace Grid_System
 
         [SerializeField] private GameObject cellPrefab;
 
-        [SerializeField] private List<GameObject> _instantiatedCells = new();
+        [FormerlySerializedAs("_instantiatedCells")] [SerializeField] private List<GameObject> instantiatedCells = new();
         [SerializeField] private Transform cellParent; 
 
-        public Grid grid;
+        public Grid Grid;
         
 
         private void Awake()
@@ -50,46 +51,87 @@ namespace Grid_System
 
         private void Start()
         {
-            if (grid is null)
+            if (Grid is null)
             {
                 InitializeGridOnStart();
             }
+
+            RemoveTempObjects();
+            SetCameraPos();
         }
 
         public void InitializeGridOnStart()
         {
             //ClearGrid();
 
-            grid = new Grid(width, height, 1);
+            Grid = new Grid(width, height, 1);
 
             for (int i = 0; i < cellParent.childCount; i++)
             {
                 var cell = cellParent.GetChild(i);
-                _instantiatedCells.Add(cell.gameObject);
-                var (x, y) = grid.GetGridIndex(cell.transform.position);
-                grid.AddCell(x, y, cell.GetComponent<Cell>());
+                
+                var (x, y) = Grid.GetGridIndex(cell.transform.position);
+                Grid.AddCell(x, y, cell.GetComponent<Cell>());
+
+                if (instantiatedCells.Contains(cell.gameObject)) continue;
+                
+                instantiatedCells.Add(cell.gameObject);
             }
+        }
+
+        private void RemoveTempObjects()
+        {
+            var tempTransformGo = GameObject.Find("temp");
+            if (tempTransformGo == null)
+            {
+                Debug.Log("tempTransformGo is null.");
+                return;
+            }
+
+            var childCount = tempTransformGo.transform.childCount;
+
+            Debug.Log($"childCount is {childCount}", tempTransformGo);
+            
+            for (var i = 0; i < childCount; i++)
+            {
+                var child = tempTransformGo.transform.GetChild(i);
+                child.gameObject.SetActive(false);
+            }
+        }
+
+        private void SetCameraPos()
+        {
+            var xPos = width / 2f;
+            var zPos = height / 2f;
+
+
+            Camera.main.transform.position = new Vector3(xPos, 10, zPos);
         }
 
         #if UNITY_EDITOR
         [Button]
         public void SetupGrid()
         {
-            if (_instantiatedCells.Count > 0)
+            if (cellParent == null)
+            {
+                var cellParentInstantiated = new GameObject("Cells");
+                cellParent = cellParentInstantiated.transform;
+            }
+            if (instantiatedCells.Count > 0)
             {
                 ClearGrid();
             }
-            grid = new Grid(width, height, 1);
+            Grid = new Grid(width, height, 1);
 
             for (var x = 0; x < width; x++)
             {
                 for (var y = 0; y < height; y++)
                 {
-                    var pos = grid.GetWorldPositionCenter(x, y);
+                    var pos = Grid.GetWorldPositionCenter(x, y);
                     var cellInstantiated = Instantiate(cellPrefab, pos, Quaternion.identity);
                     cellInstantiated.transform.SetParent(cellParent);
-                    _instantiatedCells.Add(cellInstantiated);
-                    grid.AddCell(x, y, cellInstantiated.GetComponent<Cell>());
+                    instantiatedCells.Add(cellInstantiated);
+                    Grid.AddCell(x, y, cellInstantiated.GetComponent<Cell>());
                 }
             }
         }
@@ -98,18 +140,35 @@ namespace Grid_System
         [Button]
         private void ClearGrid()
         {
-            grid = null;
-            foreach (var t in _instantiatedCells)
+            Grid = null;
+            for (var i = 0; i < instantiatedCells.Count; i++)
             {
-                if (t == null) continue;
-                    var cell = t.GetComponent<Cell>();
-                    
+                var t = instantiatedCells[i];
+                if (t == null)
+                {
+                    instantiatedCells.RemoveAt(i);
+                    continue;
+                }
+
+                var cell = t.GetComponent<Cell>();
+
                 if (cell is null) continue;
-                    cell.ClearCell();
+                cell.ClearCell();
                 DestroyImmediate(t);
             }
             
-            _instantiatedCells.Clear();
+            var tempTransformGo = GameObject.Find("temp");
+            if (tempTransformGo == null) return;
+            
+            var childCount = tempTransformGo.transform.childCount;
+            
+            for (var i = childCount - 1; i >= 0; i--)
+            {
+                var child = tempTransformGo.transform.GetChild(i);
+                DestroyImmediate(child.gameObject);
+            }
+
+            instantiatedCells.Clear();
         }
         #endif
 
@@ -121,7 +180,7 @@ namespace Grid_System
             {
                 for (int y = 0; y < height; y++)
                 {
-                    var cell = grid.GetCell(x, y);
+                    var cell = Grid.GetCell(x, y);
                     if (cell.objectStackList.Count != 0)
                     {
                         isClear = false;
@@ -134,16 +193,16 @@ namespace Grid_System
 
         private void OnDrawGizmos()
         {
-            if (grid == null) return;
-            if (grid.GetGrid().Length == 0) return;
+            if (Grid == null) return;
+            if (Grid.GetGrid().Length == 0) return;
 
-            var gridArray = grid.GetGrid();
+            var gridArray = Grid.GetGrid();
 
             for (int x = 0; x < width; x++)
             {
                 for (int y = 0; y < height; y++)
                 {
-                    Gizmos.DrawWireCube(grid.GetWorldPositionCenter(x, y), new Vector3(cellSize, cellSize, cellSize));
+                    Gizmos.DrawWireCube(Grid.GetWorldPositionCenter(x, y), new Vector3(cellSize, cellSize, cellSize));
                 }
             }
         }

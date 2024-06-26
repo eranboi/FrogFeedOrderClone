@@ -6,14 +6,14 @@ using UnityEngine;
 namespace Entities
 {
     public abstract class CellObject : MonoBehaviour
-    { 
+    {
+        public bool isPickedUp;
         public CellObjectColor cellObjectColor;
-        private Cell connectedCell;
-
         public float height;
 
         private void Start()
         {
+            isPickedUp = false;
             transform.localScale = Vector3.zero;
             transform.DOScale(Vector3.one, .2f);
         }
@@ -29,6 +29,7 @@ namespace Entities
 
         public void Pop()
         {
+            if (isPickedUp) return;
             transform.DOKill();
             transform.DOPunchScale(Vector3.one * 1.1f, .25f);
         }
@@ -42,10 +43,11 @@ namespace Entities
 
     public enum CellObjectColor
     {
-        BLUE,
-        GREEN,
-        PURPLE,
-        RED,
-        YELLOW
+        Blue,
+        Green,
+        Purple,
+        Red,
+        Yellow
     }
+    
 }

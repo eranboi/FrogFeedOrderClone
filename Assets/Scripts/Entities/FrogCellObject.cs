@@ -6,11 +6,11 @@ namespace Entities
 {
     public class FrogCellObject : CellObject
     {
-        private TongueController tongue;
+        private TongueController _tongue;
 
         private void Awake()
         {
-            tongue = GetComponentInChildren<TongueController>();
+            _tongue = GetComponentInChildren<TongueController>();
         }
 
         private void Update()
@@ -33,7 +33,7 @@ namespace Entities
         private void OnMouseClick()
         {
             GameManager.OnFrogClick?.Invoke();
-            tongue.StartCollecting();
+            _tongue.StartCollecting();
         }
     }
 }

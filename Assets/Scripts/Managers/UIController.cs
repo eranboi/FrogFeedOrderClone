@@ -37,7 +37,7 @@ namespace Managers
 
         private void LoadNextLevel()
         {
-            var totalLevelCount = 3;
+            var totalLevelCount = 5;
             var sceneBuildIndex = (SceneManager.GetActiveScene().buildIndex + 1) % totalLevelCount;
 
             SceneManager.LoadScene(sceneBuildIndex);

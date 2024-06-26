@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Entities;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -12,6 +13,7 @@ namespace Grid_System
 
         [SerializeField] private List<GrapeCellObject> allGrapes;
 
+        
 
         [Button]
         public void FixHierarchy()
@@ -31,11 +33,8 @@ namespace Grid_System
             if (objectStackList.Count == 0) return;
             var topCellObject = objectStackList[^1];
 
-            if (topCellObject is not TileCellObject)
-            {
-                return;
-            }
-
+            if (topCellObject is not TileCellObject) return;
+            
             var tileCellObject = topCellObject as TileCellObject;
             
             var color = topCellObject.cellObjectColor;
@@ -43,18 +42,20 @@ namespace Grid_System
             var cellObjectSpawnable = tileCellObject.spawnableCellObject;
             var toSpawn = cellObjectSpawnable.cellObjectToSpawn;
             
+            
+            
             if (toSpawn == null)
             {
                 toSpawn = allGrapes.Find(x => x.cellObjectColor == color);
             }
+            else
+            {
+                toSpawn.cellObjectColor = topCellObject.cellObjectColor;
+            }
             
             var yPosition = 0f;
-            var cumulativeHeight = 0f;
-
-            foreach (var cellObject in objectStackList)
-            {
-                cumulativeHeight += cellObject.height;
-            }
+            
+            var cumulativeHeight = objectStackList.Sum(cellObject => cellObject.height);
 
             yPosition = cumulativeHeight + toSpawn.height / 2;
             var newPos = new Vector3(transform.position.x, yPosition, transform.position.z);
@@ -95,17 +96,22 @@ namespace Grid_System
 
         public void ClearCell()
         {
-            #if UNITY_EDITOR
-            foreach (var t in objectStackList)
+            
+            for (var i = objectStackList.Count - 1; i >= 0; i--)
             {
+                var t = objectStackList[i];
+                if (t == null)
+                {
+                    objectStackList.RemoveAt(i);
+                    continue;
+                }
+                
+                #if UNITY_EDITOR
                 DestroyImmediate(t.gameObject);
-            }
-            #endif
-            foreach (var t in objectStackList)
-            {
+                #else
                 Destroy(t.gameObject);
+                #endif
             }
-
             objectStackList.Clear();
         }
 
